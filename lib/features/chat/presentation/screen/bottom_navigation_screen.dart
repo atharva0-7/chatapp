@@ -31,17 +31,28 @@ class _BottomNavigationState extends State<BottomNavigation> {
       bottomNavigationBar: BottomNavigationBar(
           onTap: onItemTapped,
           currentIndex: selectedIndex,
-          selectedIconTheme:
-              IconThemeData(color: Theme.of(context).primaryColor),
+          selectedLabelStyle: kSelectedLabelStyle,
           items: [
             BottomNavigationBarItem(
+                activeIcon: SvgPicture.asset(
+                  "assets/chatIcon.svg",
+                  color: Theme.of(context).primaryColor,
+                ),
                 label: "Chats".tr,
                 icon: SvgPicture.asset("assets/chatIcon.svg")),
             BottomNavigationBarItem(
+                activeIcon: SvgPicture.asset(
+                  "assets/bottomnavigationFriendsIcon.svg",
+                  color: Theme.of(context).primaryColor,
+                ),
                 label: "Friends".tr,
                 icon:
                     SvgPicture.asset("assets/bottomnavigationFriendsIcon.svg")),
             BottomNavigationBarItem(
+                activeIcon: SvgPicture.asset(
+                  "assets/settingLogo.svg",
+                  color: Theme.of(context).primaryColor,
+                ),
                 label: "Settings".tr,
                 icon: SvgPicture.asset("assets/settingLogo.svg"))
           ]),

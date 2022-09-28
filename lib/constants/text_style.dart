@@ -34,7 +34,7 @@ const kChatUsersTextStyle =
 const kChatUsersSubTitleTextStyle =
     TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 const kSelectedLabelStyle =
-    TextStyle(fontWeight: FontWeight.w600, fontSize: 10, color: Colors.black);
+    TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black);
 const kUnSelectedLabelStyle = TextStyle(
     fontWeight: FontWeight.w600, fontSize: 10, color: kUnselectedBarColor);
 const kSettingsTitleTextStyle = TextStyle(

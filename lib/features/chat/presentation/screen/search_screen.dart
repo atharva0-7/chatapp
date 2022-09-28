@@ -34,7 +34,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   User user = FirebaseAuth.instance.currentUser!;
   List<UserEntity> searchedUsersList = [];
-
+  bool isUserPresent = false;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -45,7 +45,42 @@ class _SearchScreenState extends State<SearchScreen> {
             if (state is InitialChatUserState) {
               BlocProvider.of<ChatUserBloc>(context)
                   .add(GetChatUserEvent(user.uid));
-              return const Center(child: CircularProgressIndicator());
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 60.0, horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back)),
+                    TextField(
+                      autofocus: true,
+                      onChanged: searchUsers,
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 25,
+                          ),
+                          isDense: true,
+                          constraints: const BoxConstraints(),
+                          hintText: "Search".tr,
+                          hintStyle: const TextStyle(
+                              color: kNotAMemberColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24))),
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    const Center(child: CircularProgressIndicator()),
+                  ],
+                ),
+              );
             } else if (state is LoadedChatUserState) {
               print(state.recentSearchedList);
               return Padding(
@@ -101,14 +136,21 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: ListView(
                               padding: EdgeInsets.only(top: 32.h),
                               children: searchedUsersList.map((e) {
+                                for (UserEntity userEntity
+                                    in state.recentSearchedList) {
+                                  if (userEntity.uid == e.uid) {
+                                    isUserPresent = true;
+                                    break;
+                                  }
+                                }
                                 return widget.currentuserData.phoneNumber ==
                                         e.phoneNumber
                                     ? const SizedBox()
                                     : InkWell(
                                         onTap: () {
-                                          if (!state.recentSearchedList
-                                              .contains(e)) {
-                                            state.recentSearchedList.add(e);
+                                          if (!isUserPresent) {
+                                            state.recentSearchedList
+                                                .insert(0, e);
                                             SharedPref
                                                     .saveRecentSearchedUsers(state
                                                         .recentSearchedList)

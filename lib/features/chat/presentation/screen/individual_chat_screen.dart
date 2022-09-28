@@ -11,7 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -42,11 +42,6 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   final scrollController = ScrollController();
-
-  void scrollDown() {
-    scrollController.animateTo(scrollController.position.maxScrollExtent,
-        curve: Curves.easeOut, duration: const Duration(milliseconds: 2));
-  }
 
   @override
   void initState() {
@@ -87,7 +82,72 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                     "${widget.currentUserFirstName} ${widget.currentUserLastName}",
                 senderUserUid: widget.senderUser.uid,
               ));
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Center(child: CircularProgressIndicator()),
+                  Expanded(child: Column()),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20.0, right: 20, bottom: 20, top: 5),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.add,
+                            size: 25,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          const SizedBox(
+                            width: 14,
+                          ),
+                          Expanded(
+                            child: Container(
+                              // height: 40,
+                              decoration: BoxDecoration(
+                                color: kTextFieldColor,
+                                borderRadius: BorderRadius.circular(71),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 24.0, bottom: 3, right: 20),
+                                child: TextField(
+                                  minLines: 1,
+                                  maxLines: 4,
+                                  controller: messageController,
+                                  decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Type a message...",
+                                      hintStyle: kHintTextStyle),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: 25,
+                              width: 32,
+                              child: FloatingActionButton(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  foregroundColor:
+                                      Theme.of(context).primaryColor,
+                                  onPressed: () async {
+                                    // scrollDown();
+                                  },
+                                  child:
+                                      SvgPicture.asset("assets/sendIcon.svg")),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ));
             } else if (state is SendMessageLoadedState) {
               return StreamBuilder(
                   stream: state.messageList,
@@ -176,7 +236,8 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: Padding(
-                              padding: const EdgeInsets.all(20.0),
+                              padding: const EdgeInsets.only(
+                                  left: 20.0, right: 20, bottom: 20, top: 5),
                               child: Row(
                                 children: <Widget>[
                                   Icon(
@@ -189,15 +250,17 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                      height: 40,
+                                      // height: 40,
                                       decoration: BoxDecoration(
                                         color: kTextFieldColor,
                                         borderRadius: BorderRadius.circular(71),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 16.0, bottom: 3),
+                                            left: 24.0, bottom: 3, right: 20),
                                         child: TextField(
+                                          minLines: 1,
+                                          maxLines: 4,
                                           controller: messageController,
                                           decoration: const InputDecoration(
                                               border: InputBorder.none,
