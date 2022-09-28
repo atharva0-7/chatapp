@@ -33,10 +33,10 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
   final TextEditingController messageController = TextEditingController();
   Set<UserEntity> sharedPrefTempList = {};
   // late var sharedPrefRecentSearchedUsers;
-  clearData() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.clear();
-  }
+  // clearData() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   await preferences.clear();
+  // }
 
   @override
   Widget build(BuildContext context) {

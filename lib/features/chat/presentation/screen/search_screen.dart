@@ -37,7 +37,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.recentSearchedList);
     return BlocProvider(
       create: (context) => InjectorConfig.resolve<ChatUserBloc>(),
       child: Scaffold(
@@ -48,12 +47,18 @@ class _SearchScreenState extends State<SearchScreen> {
                   .add(GetChatUserEvent(user.uid));
               return const Center(child: CircularProgressIndicator());
             } else if (state is LoadedChatUserState) {
+              print(state.recentSearchedList);
               return Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 60.0, horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back)),
                     TextField(
                       autofocus: true,
                       onChanged: searchUsers,
@@ -78,7 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0.w),
                       child: SizedBox(
-                        child: widget.recentSearchedList.isEmpty ||
+                        child: state.recentSearchedList.isEmpty ||
                                 searchedUsersList.isNotEmpty
                             ? Text(
                                 kSearchUsersText,
@@ -90,7 +95,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               ),
                       ),
                     ),
-                    widget.recentSearchedList.isEmpty ||
+                    state.recentSearchedList.isEmpty ||
                             searchedUsersList.isNotEmpty
                         ? Expanded(
                             child: ListView(
@@ -101,8 +106,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     ? const SizedBox()
                                     : InkWell(
                                         onTap: () {
-                                          print(searchedUsersList);
-                                          if (!widget.recentSearchedList
+                                          if (!state.recentSearchedList
                                               .contains(e)) {
                                             state.recentSearchedList.add(e);
                                             SharedPref
@@ -148,8 +152,8 @@ class _SearchScreenState extends State<SearchScreen> {
                           )
                         : Expanded(
                             child: ListView(
-                              padding: EdgeInsets.only(top: 32.h, left: 16.w),
-                              children: widget.recentSearchedList.map((e) {
+                              padding: EdgeInsets.only(top: 32.h),
+                              children: state.recentSearchedList.map((e) {
                                 return InkWell(
                                   onTap: () {
                                     Navigator.pushReplacement(

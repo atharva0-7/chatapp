@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
         mappedData.add(data.data() as Map);
       }
     }
-
     print(mappedData[0]['uid']);
     // print();
   }
