@@ -1,7 +1,7 @@
-import 'package:chat_app_flutter/features/chat/data/datasource/local/get_recent_user_impl.dart';
-import 'package:chat_app_flutter/features/chat/data/datasource/remote/get_current_user_data.dart';
-import 'package:chat_app_flutter/features/chat/data/datasource/remote/get_messages.dart';
-import 'package:chat_app_flutter/features/chat/data/datasource/remote/send_message.dart';
+import 'package:chat_app_flutter/features/chat/data/datasource/local_datasource/get_recent_user_impl.dart';
+import 'package:chat_app_flutter/features/chat/data/datasource/remote_datasource/get_current_user_data.dart';
+import 'package:chat_app_flutter/features/chat/data/datasource/remote_datasource/get_messages.dart';
+import 'package:chat_app_flutter/features/chat/data/datasource/remote_datasource/send_message.dart';
 import 'package:chat_app_flutter/features/chat/data/repositories/get_current_user_data_repositoryimpl.dart';
 import 'package:chat_app_flutter/features/chat/data/repositories/get_message_repository_impl.dart';
 import 'package:chat_app_flutter/features/chat/data/repositories/get_recent_users_list_repository_impl.dart';
@@ -19,8 +19,7 @@ import 'package:chat_app_flutter/features/chat/domain/usecase/send_message_useca
 import 'package:chat_app_flutter/features/chat/presentation/bloc/send_message_bloc/send_message_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 
-import '../features/chat/data/datasource/remote/get_chat_users.dart';
-
+import '../features/chat/data/datasource/remote_datasource/get_chat_users.dart';
 import '../features/chat/domain/usecase/get_chat_users_usecase.dart';
 import '../features/chat/domain/usecase/get_messages_usecase.dart';
 import '../features/chat/presentation/bloc/get_chat_user_bloc/chat_user_bloc.dart';
@@ -60,10 +59,11 @@ abstract class InjectorConfig {
       from: GetCurrentUserDataRepositoryImpl)
   @Register.factory(GetCurrentUserDataSource, from: GetCurrenUserDataImpl)
 
-
   //GEtRecentSearchedList
   @Register.factory(GetRecentSearchedUsersUseCase)
-  @Register.factory(GetRecentSearchedUsersRepository,from: GetRecentSearchedUsersRepositoryImpl)
-  @Register.factory(GetRecentSearchedUsersSource,from: GetRecentSearchedUsersImpl)
+  @Register.factory(GetRecentSearchedUsersRepository,
+      from: GetRecentSearchedUsersRepositoryImpl)
+  @Register.factory(GetRecentSearchedUsersSource,
+      from: GetRecentSearchedUsersImpl)
   void _configure();
 }

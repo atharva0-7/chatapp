@@ -14,7 +14,11 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int selectedIndex = 0;
-  List pages = [ChatHomeScreen(), SettingsScreen(), SettingsScreen()];
+  List<Widget> pages = [
+    const ChatHomeScreen(),
+    const SettingsScreen(),
+    const SettingsScreen()
+  ];
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -26,10 +30,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
           onTap: onItemTapped,
-          // selectedIconTheme:
-          //     IconThemeData(color: Theme.of(context).primaryColor),
-          unselectedLabelStyle: kUnSelectedLabelStyle,
-          selectedLabelStyle: kSelectedLabelStyle,
+          selectedIconTheme:
+              IconThemeData(color: Theme.of(context).primaryColor),
           items: [
             BottomNavigationBarItem(
                 label: "Chats".tr,
@@ -42,7 +44,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 label: "Settings".tr,
                 icon: SvgPicture.asset("assets/settingLogo.svg"))
           ]),
-      body: pages.elementAt(selectedIndex),
+      body: IndexedStack(
+        index: selectedIndex,
+        children: pages,
+      ),
     );
   }
 }

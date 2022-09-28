@@ -5,7 +5,8 @@ import 'package:chat_app_flutter/features/chat/domain/entities/user_entity.dart'
 import 'package:chat_app_flutter/features/chat/presentation/bloc/get_chat_user_bloc/chat_user_bloc.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/get_chat_user_bloc/chat_user_event.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/get_chat_user_bloc/chat_user_state.dart';
-import 'package:chat_app_flutter/features/chat/presentation/screen/individual_chat_screen.dart';
+
+import 'package:chat_app_flutter/features/chat/presentation/screen/search_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/bottom_sheet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -17,12 +18,11 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../constants/color_constant.dart';
-import '../../../../utils/shared_prefrences.dart';
 
 List<UserEntity> recentChatList = [];
 
 class ChatHomeScreen extends StatefulWidget {
-  ChatHomeScreen({Key? key}) : super(key: key);
+  const ChatHomeScreen({Key? key}) : super(key: key);
 
   @override
   State<ChatHomeScreen> createState() => _ChatHomeScreenState();
@@ -30,8 +30,8 @@ class ChatHomeScreen extends StatefulWidget {
 
 class _ChatHomeScreenState extends State<ChatHomeScreen> {
   final User currentUser = FirebaseAuth.instance.currentUser!;
-  Set<UserEntity> searchedUsersList = {};
-  List<UserEntity> allUsersList = [];
+  final TextEditingController messageController = TextEditingController();
+  Set<UserEntity> sharedPrefTempList = {};
   // late var sharedPrefRecentSearchedUsers;
   clearData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -63,7 +63,10 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                               fontWeight: FontWeight.w600,
                               color: Theme.of(context).primaryColor),
                         ),
-                        kChatsTitleText,
+                        Text(
+                          kChatsTitleText,
+                          style: kChatsTitleTextStyle,
+                        ),
                         SvgPicture.asset("assets/editIcon.svg"),
                       ],
                     ),
@@ -77,6 +80,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                       height: 44,
                       width: double.infinity,
                       child: TextField(
+                        controller: messageController,
                         decoration: InputDecoration(
                             constraints: const BoxConstraints(),
                             hintText: "Search".tr,
@@ -109,7 +113,10 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                               fontWeight: FontWeight.w600,
                               color: Theme.of(context).primaryColor),
                         ),
-                        kChatsTitleText,
+                        Text(
+                          kChatsTitleText,
+                          style: kChatsTitleTextStyle,
+                        ),
                         GestureDetector(
                             onTap: () {
                               BlocProvider.of<ChatUserBloc>(context)
@@ -131,86 +138,88 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                       height: 44,
                       width: double.infinity,
                       child: TextField(
-                        onTap: () {
-                          BlocProvider.of<ChatUserBloc>(context)
-                              .add(GetChatUserEvent(currentUser.uid));
-                          setState(() {
-                            print(state.recentSearchedList);
-                            searchedUsersList = state.recentSearchedList;
-                          });
-
-                          setState(() {
-                            allUsersList = state.usersList;
-                          });
+                        controller: messageController,
+                        onChanged: (value) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => SearchScreen(
+                                      currentuserData: state.currentUserData,
+                                      allUsersList: state.usersList,
+                                      recentSearchedList:
+                                          state.recentSearchedList)));
+                          messageController.text = "";
                         },
-                        onChanged: searchUsers,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => SearchScreen(
+                                      currentuserData: state.currentUserData,
+                                      allUsersList: state.usersList,
+                                      recentSearchedList:
+                                          state.recentSearchedList)));
+                        },
                         decoration: InputDecoration(
                             constraints: const BoxConstraints(),
-                            hintText: "Search",
-                            hintStyle: TextStyle(
-                                color: kNotAMemberColor,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400),
+                            hintText: "Search".tr,
                             border: InputBorder.none),
                       ),
                     ),
-                    Expanded(
-                      child: ListView(children: [
-                        searchedUsersList.isEmpty
-                            ? const SizedBox()
-                            : kSearchUsersText,
-                        ...searchedUsersList.map((e) {
-                          return e.phoneNumber ==
-                                  state.currentUserData.phoneNumber
-                              ? const SizedBox()
-                              : InkWell(
-                                  onTap: () {
-                                    print(state.recentSearchedList);
-                                    if (!searchedUsersList.contains(e)) {
-                                      recentChatList.add(e);
-                                      SharedPref.saveRecentSearchedUsers(
-                                          recentChatList);
-                                      print(recentChatList);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) =>
-                                                  IndividualChatScreen(
-                                                      receivingUser: e,
-                                                      senderUser: currentUser,
-                                                      currentUserLastName: state
-                                                          .currentUserData
-                                                          .lastName,
-                                                      currentUserFirstName:
-                                                          state.currentUserData
-                                                              .firstName)));
-                                    } else {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) =>
-                                                  IndividualChatScreen(
-                                                      receivingUser: e,
-                                                      senderUser: currentUser,
-                                                      currentUserLastName: state
-                                                          .currentUserData
-                                                          .lastName,
-                                                      currentUserFirstName:
-                                                          state.currentUserData
-                                                              .firstName)));
-                                    }
-                                  },
-                                  child: ListTile(
-                                    title: Text(
-                                      "${e.firstName} ${e.lastName}",
-                                      style: kSearchUsersTextStyle,
-                                    ),
-                                    subtitle: Text(e.phoneNumber),
-                                  ),
-                                );
-                        }).toList(),
-                      ]),
-                    )
+
+                    // // searched users list is empty
+                    // ...searchedUsersList.map((e) {
+                    //   return e.phoneNumber ==
+                    //           state.currentUserData.phoneNumber
+                    //       ? const SizedBox()
+                    //       : InkWell(
+                    //           onTap: () {
+                    //             sharedPrefTempList.add(e);
+
+                    //             print(state.recentSearchedList);
+                    //             if (!searchedUsersList.contains(e)) {
+                    //               recentChatList.add(e);
+                    //               SharedPref.saveRecentSearchedUsers(
+                    //                   recentChatList);
+                    //               print(recentChatList);
+                    //               Navigator.push(
+                    //                   context,
+                    //                   MaterialPageRoute(
+                    //                       builder: (_) =>
+                    //                           IndividualChatScreen(
+                    //                               receivingUser: e,
+                    //                               senderUser: currentUser,
+                    //                               currentUserLastName: state
+                    //                                   .currentUserData
+                    //                                   .lastName,
+                    //                               currentUserFirstName:
+                    //                                   state.currentUserData
+                    //                                       .firstName)));
+                    //             } else {
+                    //               Navigator.push(
+                    //                   context,
+                    //                   MaterialPageRoute(
+                    //                       builder: (_) =>
+                    //                           IndividualChatScreen(
+                    //                               receivingUser: e,
+                    //                               senderUser: currentUser,
+                    //                               currentUserLastName: state
+                    //                                   .currentUserData
+                    //                                   .lastName,
+                    //                               currentUserFirstName:
+                    //                                   state.currentUserData
+                    //                                       .firstName)));
+                    //             }
+                    //           },
+                    //           child: ListTile(
+                    //             title: Text(
+                    //               "${e.firstName} ${e.lastName}",
+                    //               style: kSearchUsersTextStyle,
+                    //             ),
+                    //             subtitle: Text(e.phoneNumber),
+                    //           ),
+                    //         );
+                    // }).toList()
                   ],
                 ),
               ),
@@ -220,24 +229,5 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
         return Container();
       },
     );
-  }
-
-  void searchUsers(String query) {
-    if (query == "") {
-      setState(() {
-        searchedUsersList = {};
-      });
-      return;
-    }
-    List<UserEntity> tempList = allUsersList;
-    Set<UserEntity> suggestion = tempList.where((element) {
-      final userFirstName = element.firstName.toString().toLowerCase();
-      final userLastName = element.lastName.toString().toLowerCase();
-      final input = query.trimLeft().trimRight().toLowerCase();
-      return userFirstName.startsWith(input) || userLastName.startsWith(input);
-    }).toSet();
-    setState(() {
-      searchedUsersList = suggestion;
-    });
   }
 }

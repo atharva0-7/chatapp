@@ -18,8 +18,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool isChecked = false;
-  final TextEditingController first_name = TextEditingController();
-  final TextEditingController last_name = TextEditingController();
+  final TextEditingController firstName = TextEditingController();
+  final TextEditingController lastName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +29,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            kSignUpText,
+            Text(
+              kSignUpText,
+              style: kSignUpTextStyle,
+            ),
             SizedBox(
               height: 8.h,
             ),
-            kCreateAnAccountToGetStarted,
+            Text(
+              kCreateAnAccountToGetStarted,
+              style: kCreateAnAccountToGetStartedTextStyle,
+            ),
             SizedBox(
               height: 24.h,
             ),
-            kFirstNameText,
+            Text(
+              kFirstNameText,
+              style: kNameTextStyle,
+            ),
             SizedBox(
               height: 8.h,
             ),
@@ -50,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 padding: EdgeInsets.only(left: 10.0.w),
                 child: TextFormField(
                   onChanged: (value) {
-                    first_name.text = value;
+                    firstName.text = value;
                   },
                   decoration: InputDecoration(
                       border: InputBorder.none,
@@ -62,7 +71,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             SizedBox(
               height: 20.h,
             ),
-            kLastNameText,
+            Text(
+              kLastNameText,
+              style: kNameTextStyle,
+            ),
             SizedBox(
               height: 8.h,
             ),
@@ -75,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 padding: EdgeInsets.only(left: 10.0.w),
                 child: TextFormField(
                   onChanged: (value) {
-                    last_name.text = value;
+                    lastName.text = value;
                   },
                   decoration: InputDecoration(
                       border: InputBorder.none,
@@ -143,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12))),
                       padding: MaterialStateProperty.all(EdgeInsets.zero)),
-                  onPressed: isChecked && first_name.text != ""
+                  onPressed: isChecked && firstName.text != ""
                       ? () {
                           try {
                             FirebaseFirestore.instance
@@ -152,8 +164,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 .set({
                               'uid': widget.uid,
                               'phone_number': widget.phoneNumber,
-                              'first_name': first_name.text,
-                              'last_name': last_name.text,
+                              'first_name': firstName.text,
+                              'last_name': lastName.text,
                             }).whenComplete(() => Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
@@ -165,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
                         }
                       : null,
-                  child: kSignUpTextButton),
+                  child: Text(kSignUpTextButton)),
             ),
           ]),
         ),

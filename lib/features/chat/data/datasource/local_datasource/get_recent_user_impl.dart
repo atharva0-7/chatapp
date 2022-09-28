@@ -4,26 +4,21 @@ import '../../../../../utils/shared_prefrences.dart';
 import '../../models/user_model.dart';
 
 abstract class GetRecentSearchedUsersSource {
-  Future<Set<UserModel>> getRecentSearchedUsersSource();
+  Future<List<UserModel>> getRecentSearchedUsersSource();
 }
 
-class GetRecentSearchedUsersImpl extends GetRecentSearchedUsersSource {
+class GetRecentSearchedUsersImpl implements GetRecentSearchedUsersSource {
   @override
-  Future<Set<UserModel>> getRecentSearchedUsersSource() async {
+  Future<List<UserModel>> getRecentSearchedUsersSource() async {
     String? recentSearchedDataString =
         await SharedPref.getRecentSearchedUsers();
     if (recentSearchedDataString == null || recentSearchedDataString.isEmpty) {
-      return {};
+      return [];
     }
     List recentSearchedDataList = (jsonDecode(recentSearchedDataString));
-    //  recentSearchedDataList.map((e) => );
-    print(recentSearchedDataList);
-    Set<UserModel> list =
-        recentSearchedDataList.map((e) => UserModel.fromLocal(e)).toSet();
-    // print(list[0].firstName);
+    List<UserModel> list =
+        recentSearchedDataList.map((e) => UserModel.fromLocal(e)).toList();
 
     return list;
-
-    // print(userList);
   }
 }

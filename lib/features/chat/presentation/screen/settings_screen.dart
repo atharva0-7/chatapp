@@ -1,41 +1,26 @@
-import 'package:chat_app_flutter/constants/color_constant.dart';
 import 'package:chat_app_flutter/constants/text_style.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/get_chat_user_bloc/chat_user_bloc.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/get_chat_user_bloc/chat_user_state.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/alert_dialogue.dart';
-import 'package:chat_app_flutter/features/login/presentation/screens/login_screen.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:translator/translator.dart';
 
 import '../../../../constants/text_constant.dart';
 import '../bloc/get_chat_user_bloc/chat_user_event.dart';
 
 class SettingsScreen extends StatefulWidget {
-  SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  GoogleTranslator translator = GoogleTranslator();
-
-  String languageText = 'Language';
-
-  void translate() {
-    translator.translate(languageText, from: 'en', to: 'hi').then((value) {
-      setState(() {
-        languageText = value.text;
-      });
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -58,7 +43,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    kSettingsTitleText,
+                    Text(
+                      kSettingsTitleText,
+                      style: kSettingsTitleTextStyle,
+                    ),
                     SizedBox(height: 27.5.h),
                     SvgPicture.asset("assets/Avatar.svg"),
                     SizedBox(
@@ -78,7 +66,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              kSavedMesssageText,
+                              Text(
+                                kSavedMesssageText,
+                                style: kSettingsPageOptionTextStyle,
+                              ),
                               const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 14,
@@ -98,7 +89,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              kRecentCallsText,
+                              Text(
+                                kRecentCallsText,
+                                style: kSettingsPageOptionTextStyle,
+                              ),
                               const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 14,
@@ -118,7 +112,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              kDevicesText,
+                              Text(
+                                kDevicesText,
+                                style: kSettingsPageOptionTextStyle,
+                              ),
                               const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 14,
@@ -138,7 +135,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              kNotificationText,
+                              Text(
+                                kNotificationText,
+                                style: kSettingsPageOptionTextStyle,
+                              ),
                               const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 14,
@@ -158,7 +158,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              kAppearanceText,
+                              Text(
+                                kAppearanceText,
+                                style: kSettingsPageOptionTextStyle,
+                              ),
                               const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 14,
@@ -176,15 +179,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Padding(
                           padding: const EdgeInsets.only(left: 16.0),
                           child: InkWell(
-                            onTap: () {
-                              // var locale = Locale('hi', 'IN');
-                              // Get.updateLocale(locale);
-                            },
+                            onTap: () {},
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  languageText,
+                                  kLanguageString,
                                   style: kSettingsPageOptionTextStyle,
                                 ),
                                 const Icon(
@@ -227,7 +227,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              kStorageText,
+                              Text(
+                                kStorageText,
+                                style: kSettingsPageOptionTextStyle,
+                              ),
                               const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 14,
@@ -249,7 +252,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                kLogOutText,
+                                Text(
+                                  kLogOutText,
+                                  style: kSettingsPageOptionTextStyle,
+                                ),
                                 const Icon(
                                   Icons.arrow_forward_ios,
                                   size: 14,

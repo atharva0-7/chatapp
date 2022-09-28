@@ -6,7 +6,7 @@ abstract class GetCurrentUserDataSource {
   Future<UserModel> currentUserDataSource(String uid);
 }
 
-class GetCurrenUserDataImpl extends GetCurrentUserDataSource {
+class GetCurrenUserDataImpl implements GetCurrentUserDataSource {
   @override
   Future<UserModel> currentUserDataSource(String uid) async {
     DocumentSnapshot<Map<String, dynamic>> currentUserData =

@@ -2,12 +2,12 @@ import 'package:chat_app_flutter/features/chat/domain/entities/user_entity.dart'
 
 abstract class ChatUserState {}
 
-class InitialChatUserState extends ChatUserState {}
+class InitialChatUserState implements ChatUserState {}
 
-class LoadedChatUserState extends ChatUserState {
-  List<UserEntity> usersList;
-  UserEntity currentUserData;
-  Set<UserEntity> recentSearchedList;
+class LoadedChatUserState implements ChatUserState {
+  final List<UserEntity> usersList;
+  final UserEntity currentUserData;
+  final List<UserEntity> recentSearchedList;
   LoadedChatUserState(
       {required this.usersList,
       required this.currentUserData,

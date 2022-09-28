@@ -9,15 +9,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController phoneTextController = TextEditingController();
-  String verificationCode = "";
+  final TextEditingController phoneTextController = TextEditingController();
+  final String verificationCode = "";
   bool clickedLogin = false;
   bool isObseured = false;
   final _key = GlobalKey<FormState>();
@@ -44,7 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    kWelcomeText,
+                    Text(
+                      kWelcomeText,
+                      style: kWelcomeTextStyle,
+                    ),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -54,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (value!.length < 10 || value.length > 10) {
                           return "Enter 10 digit mobile number";
                         }
+                        return "";
                       },
                       onChanged: (value) {
                         phoneTextController.text = value;
@@ -95,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               phoneTextController.text = "";
                             }
                           },
-                          child: kLoginText),
+                          child: Text(kLoginText)),
                     ),
                     SizedBox(
                       height: 24.h,
@@ -109,7 +113,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Align(
                         alignment: Alignment.center,
-                        child: kOrContinueWithText),
+                        child: Text(
+                          kOrContinueWithText,
+                          style: kOrContinueWithTextStyle,
+                        )),
                     SizedBox(
                       height: 16.h,
                     ),

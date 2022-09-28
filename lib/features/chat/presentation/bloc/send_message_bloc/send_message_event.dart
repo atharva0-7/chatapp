@@ -1,10 +1,10 @@
 abstract class SendMessageEvent {}
 
 class EmittingLoadedSendMessageStateEvent extends SendMessageEvent {
-  String senderUserUid;
-  String receivingUserUid;
-  String senderName;
-  String receiverName;
+  final String senderUserUid;
+  final String receivingUserUid;
+  final String senderName;
+  final String receiverName;
 
   EmittingLoadedSendMessageStateEvent(
       {required this.receivingUserUid,
@@ -14,13 +14,13 @@ class EmittingLoadedSendMessageStateEvent extends SendMessageEvent {
 }
 
 class SendMessageEventImpl extends SendMessageEvent {
-  String senderUserUid;
-  String receivingUserUid;
-  String message;
-  String senderName;
-  String receiverName;
+  final String senderUserUid;
+  final String receivingUserUid;
+  final String message;
+  final String senderName;
+  final String receiverName;
 
-  String docId;
+  final String docId;
   SendMessageEventImpl({
     required this.docId,
     required this.message,

@@ -2,7 +2,6 @@ import 'package:chat_app_flutter/constants/color_constant.dart';
 import 'package:chat_app_flutter/constants/text_style.dart';
 import 'package:chat_app_flutter/di/injector_config.dart';
 import 'package:chat_app_flutter/features/chat/data/models/message_model.dart';
-import 'package:chat_app_flutter/features/chat/domain/entities/message_entity.dart';
 
 import 'package:chat_app_flutter/features/chat/domain/entities/user_entity.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/send_message_bloc/send_message_bloc.dart';
@@ -13,7 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class IndividualChatScreen extends StatefulWidget {
@@ -22,7 +20,7 @@ class IndividualChatScreen extends StatefulWidget {
   final String currentUserLastName;
   final String currentUserFirstName;
 
-  IndividualChatScreen(
+  const IndividualChatScreen(
       {Key? key,
       required this.receivingUser,
       required this.senderUser,
@@ -35,7 +33,7 @@ class IndividualChatScreen extends StatefulWidget {
 }
 
 class _IndividualChatScreenState extends State<IndividualChatScreen> {
-  var docid = "";
+//  final String docid = "";
 
   final TextEditingController messageController = TextEditingController();
 
@@ -51,16 +49,10 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   scrollController.jumpTo(scrollController.position.maxScrollExtent);
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    // getUidList();
-    // scrollDown();
-
     return BlocProvider(
       create: (context) => InjectorConfig.resolve<SendMessageBloc>(),
       child: Scaffold(
@@ -201,7 +193,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                                             left: 16.0, bottom: 3),
                                         child: TextField(
                                           controller: messageController,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                               border: InputBorder.none,
                                               hintText: "Type a message...",
                                               hintStyle: kHintTextStyle),
@@ -263,137 +255,3 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
     );
   }
 }
-// StreamBuilder(
-//         stream: messagesStream(currentUserName, receivingUser.name),
-//         builder: (context, AsyncSnapshot snapshot) {
-//           return Scaffold(
-//             body: Stack(
-//               children: <Widget>[
-//                 Column(children: [
-//                   SizedBox(
-//                     height: 100,
-//                     width: double.infinity,
-//                     child: Padding(
-//                       padding: const EdgeInsets.only(top: 20.0),
-//                       child: Row(
-//                         children: [
-//                           IconButton(
-//                               onPressed: () {
-//                                 Navigator.pop(context);
-//                               },
-//                               icon: kBackIcon),
-//                           const CircleAvatar(),
-//                           Padding(
-//                             padding: const EdgeInsets.only(left: 18.0),
-//                             child: Text(
-//                               receivingUser.name,
-//                               style: kUserChatTitleStyle,
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                   const Padding(
-//                     padding: EdgeInsets.only(left: 10.0, right: 10),
-//                     child: Divider(),
-//                   ),
-//                   BlocBuilder<MessageBloc, MessageState>(
-//                       builder: (context, state) {
-//                     if (state is InitialMessageState) {
-//                       BlocProvider.of<MessageBloc>(context).add(GetMessagesData(
-//                           currentUserName: currentUserName,
-//                           receivierUserName: receivingUser.name));
-//                       return const CircularProgressIndicator();
-//                     } else if (state is LoadedMessageState) {
-//                       return Container(
-//                           height: MediaQuery.of(context).size.height - 195,
-//                           color: Colors.blue,
-//                           child: ListView.builder(
-//                             itemCount: state.currentUsersMessages.length,
-//                             itemBuilder: (context, index) {
-//                               return ListTile(
-//                                 title: Text(
-//                                     state.currentUsersMessages[index]["name"]),
-//                                 subtitle: Text(state.currentUsersMessages[index]
-//                                     ["message"]),
-//                               );
-//                             },
-//                           ));
-//                     } else {
-//                       return Container();
-//                     }
-//                   })
-//                 ]),
-//                 Align(
-//                   alignment: Alignment.bottomLeft,
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(20.0),
-//                     child: Row(
-//                       children: <Widget>[
-//                         const SizedBox(
-//                           width: 15,
-//                         ),
-//                         Expanded(
-//                           child: Container(
-//                             decoration: BoxDecoration(
-//                                 borderRadius: BorderRadius.circular(15),
-//                                 border: Border.all()),
-//                             child: Padding(
-//                               padding: const EdgeInsets.only(left: 8.0),
-//                               child: TextField(
-//                                 onChanged: (value) {
-//                                   messageController.text = value;
-//                                 },
-//                                 decoration: const InputDecoration(
-//                                     hintText: "Send message...",
-//                                     hintStyle: kHintTextStyle,
-//                                     border: InputBorder.none),
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                         Padding(
-//                           padding: const EdgeInsets.all(8.0),
-//                           child: ElevatedButton(
-//                               onPressed: () async {
-//                                 await sendMessage(currentUserName,
-//                                     messageController.text, receivingUser.name);
-//                                 BlocProvider.of<MessageBloc>(context).add(
-//                                     GetMessagesData(
-//                                         currentUserName: currentUserName,
-//                                         receivierUserName: receivingUser.name));
-//                               },
-//                               child: kSendMessage),
-//                         )
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           );
-//         });
-
-        // StreamBuilder(
-        //               stream: state.messageList,
-        //               builder:
-        //                   (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        //                 if (!snapshot.hasData) {
-        //                   return const Center(
-        //                     child: CircularProgressIndicator(),
-        //                   );
-        //                 } else {
-        //                   return ListView(
-        //                     children: snapshot.data!.docs.map((e) {
-        //                       print(e['message']);
-        //                       return ListTile(
-        //                         title: Text(e['message']),
-        //                       );
-        //                     }).toList(),
-        //                   );
-        //                 }
-        //               },
-        //             )
-
-                    

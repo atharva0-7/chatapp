@@ -5,13 +5,9 @@ abstract class GetChatUsers {
   Future<List<UserModel>> getSourceChatUsers();
 }
 
-class GetChatUsersImpl extends GetChatUsers {
+class GetChatUsersImpl implements GetChatUsers {
   @override
-  Future<List<UserModel>> getSourceChatUsers() {
-    return getUsers();
-  }
-
-  Future<List<UserModel>> getUsers() async {
+  Future<List<UserModel>> getSourceChatUsers() async {
     try {
       CollectionReference collectionRef =
           FirebaseFirestore.instance.collection('users');

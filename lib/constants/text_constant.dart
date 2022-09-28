@@ -1,42 +1,16 @@
-import 'package:chat_app_flutter/constants/text_style.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-var kWelcomeText = Text("Welcome".tr, style: kWelcomeTextStyle);
-const String kEmailAddressText = "Email Address";
+String kWelcomeText = "Welcome".tr;
+String kEmailAddressText = "Email Address".tr;
 String kEnterMobileText = "Enter Mobile".tr;
 const String kPasswordText = "Password";
-var kForgotPAsswordText =
-    Text("Forgot password?", style: kForgotPasswordTextStyle);
-var kLoginText = Text("Login".tr);
-var kSignUpTextButton = Text("Signup".tr);
-const kNotAMemberText = Text(
-  "Not a member? ",
-  style: kNotAMemberTextStyle,
-);
-var kOrContinueWithText = Text(
-  "Or continue with".tr,
-  style: kOrContinueWithTextStyle,
-);
-var kSignUpText = Text("Sign Up".tr, style: kSignUpTextStyle);
-var kCreateAnAccountToGetStarted = Text(
-  "Create an account to get started".tr,
-  style: kCreateAnAccountToGetStartedTextStyle,
-);
-
-var kFirstNameText = Text(
-  "First Name".tr,
-  style: kNameTextStyle,
-);
-var kLastNameText = Text(
-  "Last Name".tr,
-  style: kNameTextStyle,
-);
-var kEnterPasswordText = Text(
-  "Password",
-  style: kNameTextStyle,
-);
+String kLoginText = "Login".tr;
+String kSignUpTextButton = "Signup".tr;
+String kOrContinueWithText = "Or continue with".tr;
+String kSignUpText = "Sign Up";
+String kCreateAnAccountToGetStarted = "Create an account to get started".tr;
+String kFirstNameText = "First Name".tr;
+String kLastNameText = "Last Name".tr;
 String kEnterFirstNameText = "Enter First Name".tr;
 String kEnterLastNameText = "Enter Last Name".tr;
 
@@ -47,76 +21,40 @@ String kTermsAndConditionText = 'Terms and Conditions'.tr;
 String kAndTheText = 'and the '.tr;
 String kPrivacyPolicyText = 'Privacy Policy.'.tr;
 const String kEnterEmailIdText = "name@email.com";
-var kEnterConfirmationCodeText = Text(
-  "Enter confirmation code".tr,
-  style: kEnterConfirmationCodeTextStyle,
-);
+String kEnterConfirmationCodeText = "Enter confirmation code".tr;
+String k4DigitCodeWasSent = "A 4-digit code was sent to".tr;
+String kResendCodeText = "Resend code".tr;
 
-var k4DigitCodeWasSent = Text(
-  "A 4-digit code was sent to".tr,
-  style: k4DigitCodeWasSentTextStyle,
-);
-var kResendCodeText = Text(
-  "Resend code".tr,
-  style: kResendCodeTextStyle,
-);
+String kContinueText = "Continue".tr;
 
-var kContinueText = Text("Continue".tr);
-var kChatsTitleText = Text(
-  "Chats".tr,
-  style: kChatsTitleTextStyle,
-);
+String kChatsTitleText = "Chats".tr;
 
 String kLeadingEditText = "Edit".tr;
-var kChatUsersText = Text(
-  "Chat users".tr,
-  style: kChatsTitleTextStyle.copyWith(fontSize: 16.sp),
-);
-var kSettingsTitleText = Text("Settings".tr, style: kSettingsTitleTextStyle);
-var kSavedMesssageText = Text(
-  "Saved Messages".tr,
-  style: kSettingsPageOptionTextStyle,
-);
-var kRecentCallsText = Text(
-  "Recent Calls".tr,
-  style: kSettingsPageOptionTextStyle,
-);
-var kDevicesText = Text(
-  "Devices".tr,
-  style: kSettingsPageOptionTextStyle,
-);
-var kNotificationText = Text(
-  "Notifications".tr,
-  style: kSettingsPageOptionTextStyle,
-);
-var kAppearanceText = Text(
-  "Appearance".tr,
-  style: kSettingsPageOptionTextStyle,
-);
+String kChatUsersText = "Chat users".tr;
+
+String kSettingsTitleText = "Settings".tr;
+String kSavedMesssageText = "Saved Messages".tr;
+
+String kRecentCallsText = "Recent Calls".tr;
+
+String kDevicesText = "Devices".tr;
+
+String kNotificationText = "Notifications".tr;
+
+String kAppearanceText = "Appearance".tr;
 
 String kLanguageString = "Language".tr;
 String kPrivacyText = "Privacy & Security".tr;
-var kPrivacyText1 = Text(
-  "Privacy & Security".tr,
-  style: kSettingsPageOptionTextStyle,
-);
-var kStorageText = Text(
-  "Storage".tr,
-  style: kSettingsPageOptionTextStyle,
-);
-var kLogOutText = Text(
-  "Log Out".tr,
-  style: kSettingsPageOptionTextStyle,
-);
-var kLogOutPopOutText = Text(
-  "Log Out".tr,
-  style: kLogOutTextStyle,
-);
-var kAlertDialogueText = Text(
-  'Are you sure you want to log out? You\'ll need to login again to use the app.',
-  style: kCreateAnAccountToGetStartedTextStyle,
-);
-const kSearchUsersText = Text(
-  "Search Users",
-  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-);
+String kPrivacyText1 = "Privacy & Security".tr;
+
+String kStorageText = "Storage".tr;
+
+String kLogOutText = "Log Out".tr;
+String kLogOutPopOutText = "Log Out".tr;
+String kAlertDialogueText =
+    'Are you sure you want to log out? You\'ll need to login again to use the app.'
+        .tr;
+
+String kSearchUsersText = "Search Users";
+String kNoUsersFoundText = "No users found";
+String kRecentSearchText = "RECENT SEARCHES";

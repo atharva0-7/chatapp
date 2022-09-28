@@ -1,7 +1,7 @@
 import 'package:chat_app_flutter/features/chat/domain/repository/send_message_repository.dart';
 
 class SendMessageUseCase {
-  SendMessageRepository sendMessageRepository;
+  final SendMessageRepository sendMessageRepository;
   SendMessageUseCase({required this.sendMessageRepository});
 
   sendMessageUseCase(

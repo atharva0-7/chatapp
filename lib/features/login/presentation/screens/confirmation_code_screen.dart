@@ -8,9 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ConfirmationCodeScreen extends StatefulWidget {
-  String verficationCode;
-  String phoneNumber;
-  ConfirmationCodeScreen(
+  final String verficationCode;
+  final String phoneNumber;
+  const ConfirmationCodeScreen(
       {Key? key, required this.phoneNumber, required this.verficationCode})
       : super(key: key);
 
@@ -34,11 +34,17 @@ class _ConfirmationCodeScreenState extends State<ConfirmationCodeScreen> {
                   padding: EdgeInsets.only(top: 132.5.h),
                   child: Column(
                     children: [
-                      kEnterConfirmationCodeText,
+                      Text(
+                        kEnterConfirmationCodeText,
+                        style: kEnterConfirmationCodeTextStyle,
+                      ),
                       SizedBox(
                         height: 8.h,
                       ),
-                      k4DigitCodeWasSent,
+                      Text(
+                        k4DigitCodeWasSent,
+                        style: k4DigitCodeWasSentTextStyle,
+                      ),
                       Text(
                         widget.phoneNumber,
                         style: k4DigitCodeWasSentTextStyle,
@@ -72,7 +78,12 @@ class _ConfirmationCodeScreenState extends State<ConfirmationCodeScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextButton(onPressed: () {}, child: kResendCodeText),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          kResendCodeText,
+                          style: kResendCodeTextStyle,
+                        )),
                     SizedBox(
                       height: 28.5.h,
                     ),
@@ -106,7 +117,7 @@ class _ConfirmationCodeScreenState extends State<ConfirmationCodeScreen> {
                               print(e);
                             }
                           },
-                          child: kContinueText),
+                          child: Text(kContinueText)),
                     ),
                   ],
                 ),

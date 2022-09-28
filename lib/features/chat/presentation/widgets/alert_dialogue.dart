@@ -2,6 +2,7 @@ import 'package:chat_app_flutter/constants/text_constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../constants/text_style.dart';
 import '../../../login/presentation/screens/login_screen.dart';
 
 showDialogueFunction(BuildContext context) {
@@ -10,13 +11,20 @@ showDialogueFunction(BuildContext context) {
     builder: (BuildContext context) => AlertDialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16))),
-      title: Center(child: kLogOutPopOutText),
+      title: Center(
+          child: Text(
+        kLogOutPopOutText,
+        style: kLogOutTextStyle,
+      )),
       content: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-        height: 110,
+        height: 120,
         child: Column(
           children: [
-            kAlertDialogueText,
+            Text(
+              kAlertDialogueText,
+              style: kCreateAnAccountToGetStartedTextStyle,
+            ),
             const SizedBox(
               height: 28,
             ),
@@ -35,7 +43,8 @@ showDialogueFunction(BuildContext context) {
                       FirebaseAuth.instance.signOut().whenComplete(() =>
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (_) => LoginScreen()),
+                              MaterialPageRoute(
+                                  builder: (_) => const LoginScreen()),
                               (route) => false));
                     },
                     child: const Text('Log out'),

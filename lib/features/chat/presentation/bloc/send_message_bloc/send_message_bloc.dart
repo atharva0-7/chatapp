@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:chat_app_flutter/features/chat/domain/entities/message_entity.dart';
 import 'package:chat_app_flutter/features/chat/domain/usecase/get_messages_usecase.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/send_message_bloc/send_message_event.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/send_message_bloc/send_message_state.dart';
@@ -10,11 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/usecase/send_message_usecase.dart';
 
 class SendMessageBloc extends Bloc<SendMessageEvent, SendMessageState> {
-  SendMessageUseCase sendMessageUseCase;
-  GetMessageUseCase getMessageUseCase;
+  final SendMessageUseCase sendMessageUseCase;
+  final GetMessageUseCase getMessageUseCase;
   List<String> uidList = [];
   late Stream chatMessageStream;
-  var docId = "";
+  String docId = "";
   SendMessageBloc(
       {required this.sendMessageUseCase, required this.getMessageUseCase})
       : super(SendMessageInitialState()) {
@@ -23,10 +20,9 @@ class SendMessageBloc extends Bloc<SendMessageEvent, SendMessageState> {
           await FirebaseFirestore.instance.collection('chats').get();
       uidList = snapshot.docs.map((e) => e.id).toList();
 
+      // Char ch1 = event.senderUserUid.indexOf()
       if (!uidList.contains(event.senderUserUid + event.receivingUserUid)) {
         if (uidList.contains(event.receivingUserUid + event.senderUserUid)) {
-          print(uidList);
-
           docId = event.receivingUserUid + event.senderUserUid;
         } else {
           docId = event.senderUserUid + event.receivingUserUid;
@@ -35,7 +31,7 @@ class SendMessageBloc extends Bloc<SendMessageEvent, SendMessageState> {
         docId = event.senderUserUid + event.receivingUserUid;
       }
       Stream<QuerySnapshot> messageList =
-          await getMessageUseCase.getMessageUseCase(docId);
+          getMessageUseCase.getMessageUseCase(docId);
       emit(SendMessageLoadedState(messageList: messageList, docid: docId));
     });
 
