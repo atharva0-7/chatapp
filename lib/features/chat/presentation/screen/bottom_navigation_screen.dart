@@ -30,6 +30,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
           onTap: onItemTapped,
+          currentIndex: selectedIndex,
           selectedIconTheme:
               IconThemeData(color: Theme.of(context).primaryColor),
           items: [

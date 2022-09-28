@@ -11,7 +11,7 @@ class GetMessagesImpl implements GetMessagesSource {
         .collection('chats')
         .doc(docId)
         .collection('messages')
-        .orderBy("dateTime", descending: false)
+        .orderBy("dateTime", descending: true)
         .snapshots();
   }
 }

@@ -11,7 +11,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class IndividualChatScreen extends StatefulWidget {
@@ -43,7 +45,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
 
   void scrollDown() {
     scrollController.animateTo(scrollController.position.maxScrollExtent,
-        curve: Curves.easeOut, duration: const Duration(milliseconds: 200));
+        curve: Curves.easeOut, duration: const Duration(milliseconds: 2));
   }
 
   @override
@@ -103,7 +105,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                               child: ListView(
                                   shrinkWrap: true,
                                   controller: scrollController,
-                                  // reverse: true,
+                                  reverse: true,
                                   children: [
                                     ...snapshot.data!.docs.map((e) {
                                       MessageModel messageModel =
@@ -118,9 +120,13 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                                           padding: messageModel.sentBy ==
                                                   "${widget.currentUserFirstName} ${widget.currentUserLastName}"
                                               ? const EdgeInsets.only(
-                                                  right: 16.0, top: 10)
+                                                  right: 16.0,
+                                                  top: 10,
+                                                  left: 16.0)
                                               : const EdgeInsets.only(
-                                                  left: 16.0, top: 10),
+                                                  right: 16.0,
+                                                  left: 16.0,
+                                                  top: 10),
                                           child: Container(
                                             decoration: messageModel.sentBy ==
                                                     "${widget.currentUserFirstName} ${widget.currentUserLastName}"
@@ -145,7 +151,7 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                                                             Radius.circular(
                                                                 24)),
                                                     color: kReceiveMessageBoxColor),
-                                            height: 44,
+                                            // height: 44,
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -161,8 +167,8 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                                         ),
                                       );
                                     }).toList(),
-                                    const SizedBox(
-                                      height: 40,
+                                    SizedBox(
+                                      height: 50.h,
                                     )
                                   ]),
                             ),
@@ -212,7 +218,8 @@ class _IndividualChatScreenState extends State<IndividualChatScreen> {
                                           foregroundColor:
                                               Theme.of(context).primaryColor,
                                           onPressed: () async {
-                                            scrollDown();
+                                            // scrollDown();
+
                                             FocusManager.instance.primaryFocus
                                                 ?.unfocus();
                                             if (messageController.text != " " &&
