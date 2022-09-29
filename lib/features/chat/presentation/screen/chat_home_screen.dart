@@ -73,24 +73,23 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                     SizedBox(
                       height: 19.5.h,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: kSearchBarColor,
-                          borderRadius: BorderRadius.circular(24)),
-                      height: 44,
-                      width: double.infinity,
-                      child: TextField(
-                        controller: messageController,
-                        decoration: InputDecoration(
-                            constraints: const BoxConstraints(),
-                            hintText: "Search".tr,
-                            hintStyle: TextStyle(
-                                color: kNotAMemberColor,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400),
-                            border: InputBorder.none),
-                      ),
-                    )
+                    TextField(
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 25,
+                          ),
+                          isDense: true,
+                          constraints: const BoxConstraints(),
+                          hintText: "Search".tr,
+                          hintStyle: const TextStyle(
+                              color: kNotAMemberColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24))),
+                    ),
                   ],
                 ),
               ),
@@ -131,40 +130,44 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                     SizedBox(
                       height: 19.5.h,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: kSearchBarColor,
-                          borderRadius: BorderRadius.circular(24)),
-                      height: 44,
-                      width: double.infinity,
-                      child: TextField(
-                        controller: messageController,
-                        onChanged: (value) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => SearchScreen(
-                                      currentuserData: state.currentUserData,
-                                      allUsersList: state.usersList,
-                                      recentSearchedList:
-                                          state.recentSearchedList)));
-                          messageController.text = "";
-                        },
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => SearchScreen(
-                                      currentuserData: state.currentUserData,
-                                      allUsersList: state.usersList,
-                                      recentSearchedList:
-                                          state.recentSearchedList)));
-                        },
-                        decoration: InputDecoration(
-                            constraints: const BoxConstraints(),
-                            hintText: "Search".tr,
-                            border: InputBorder.none),
-                      ),
+                    TextField(
+                      controller: messageController,
+                      onChanged: (value) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => SearchScreen(
+                                    currentuserData: state.currentUserData,
+                                    allUsersList: state.usersList,
+                                    recentSearchedList:
+                                        state.recentSearchedList)));
+                        messageController.text = "";
+                      },
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => SearchScreen(
+                                    currentuserData: state.currentUserData,
+                                    allUsersList: state.usersList,
+                                    recentSearchedList:
+                                        state.recentSearchedList)));
+                      },
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 25,
+                          ),
+                          isDense: true,
+                          constraints: const BoxConstraints(),
+                          hintText: "Search".tr,
+                          hintStyle: const TextStyle(
+                              color: kNotAMemberColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24))),
                     ),
 
                     // // searched users list is empty

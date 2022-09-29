@@ -98,6 +98,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       autofocus: true,
                       onChanged: searchUsers,
                       decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
                           prefixIcon: const Icon(
                             Icons.search,
                             size: 25,
