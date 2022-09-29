@@ -169,60 +169,6 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24))),
                     ),
-
-                    // // searched users list is empty
-                    // ...searchedUsersList.map((e) {
-                    //   return e.phoneNumber ==
-                    //           state.currentUserData.phoneNumber
-                    //       ? const SizedBox()
-                    //       : InkWell(
-                    //           onTap: () {
-                    //             sharedPrefTempList.add(e);
-
-                    //             print(state.recentSearchedList);
-                    //             if (!searchedUsersList.contains(e)) {
-                    //               recentChatList.add(e);
-                    //               SharedPref.saveRecentSearchedUsers(
-                    //                   recentChatList);
-                    //               print(recentChatList);
-                    //               Navigator.push(
-                    //                   context,
-                    //                   MaterialPageRoute(
-                    //                       builder: (_) =>
-                    //                           IndividualChatScreen(
-                    //                               receivingUser: e,
-                    //                               senderUser: currentUser,
-                    //                               currentUserLastName: state
-                    //                                   .currentUserData
-                    //                                   .lastName,
-                    //                               currentUserFirstName:
-                    //                                   state.currentUserData
-                    //                                       .firstName)));
-                    //             } else {
-                    //               Navigator.push(
-                    //                   context,
-                    //                   MaterialPageRoute(
-                    //                       builder: (_) =>
-                    //                           IndividualChatScreen(
-                    //                               receivingUser: e,
-                    //                               senderUser: currentUser,
-                    //                               currentUserLastName: state
-                    //                                   .currentUserData
-                    //                                   .lastName,
-                    //                               currentUserFirstName:
-                    //                                   state.currentUserData
-                    //                                       .firstName)));
-                    //             }
-                    //           },
-                    //           child: ListTile(
-                    //             title: Text(
-                    //               "${e.firstName} ${e.lastName}",
-                    //               style: kSearchUsersTextStyle,
-                    //             ),
-                    //             subtitle: Text(e.phoneNumber),
-                    //           ),
-                    //         );
-                    // }).toList()
                   ],
                 ),
               ),
