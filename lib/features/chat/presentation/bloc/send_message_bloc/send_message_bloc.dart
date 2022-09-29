@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:chat_app_flutter/features/chat/domain/usecase/get_messages_usecase.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/send_message_bloc/send_message_event.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/send_message_bloc/send_message_state.dart';
@@ -20,16 +22,13 @@ class SendMessageBloc extends Bloc<SendMessageEvent, SendMessageState> {
           await FirebaseFirestore.instance.collection('chats').get();
       uidList = snapshot.docs.map((e) => e.id).toList();
 
-      // Char ch1 = event.senderUserUid.indexOf()
-      if (!uidList.contains(event.senderUserUid + event.receivingUserUid)) {
-        if (uidList.contains(event.receivingUserUid + event.senderUserUid)) {
-          docId = event.receivingUserUid + event.senderUserUid;
-        } else {
-          docId = event.senderUserUid + event.receivingUserUid;
-        }
-      } else {
+      if (event.senderUserUid.codeUnitAt(0) >
+          event.receivingUserUid.codeUnitAt(0)) {
         docId = event.senderUserUid + event.receivingUserUid;
+      } else {
+        docId = event.receivingUserUid + event.senderUserUid;
       }
+
       Stream<QuerySnapshot> messageList =
           getMessageUseCase.getMessageUseCase(docId);
       emit(SendMessageLoadedState(messageList: messageList, docid: docId));
