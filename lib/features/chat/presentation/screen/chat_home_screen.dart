@@ -5,9 +5,11 @@ import 'package:chat_app_flutter/features/chat/domain/entities/user_entity.dart'
 import 'package:chat_app_flutter/features/chat/presentation/bloc/get_chat_user_bloc/chat_user_bloc.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/get_chat_user_bloc/chat_user_event.dart';
 import 'package:chat_app_flutter/features/chat/presentation/bloc/get_chat_user_bloc/chat_user_state.dart';
+import 'package:chat_app_flutter/features/chat/presentation/screen/individual_chat_screen.dart';
 
 import 'package:chat_app_flutter/features/chat/presentation/screen/search_screen.dart';
 import 'package:chat_app_flutter/features/chat/presentation/widgets/bottom_sheet.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -15,7 +17,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../constants/color_constant.dart';
 
@@ -37,6 +38,15 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
   //   SharedPreferences preferences = await SharedPreferences.getInstance();
   //   await preferences.clear();
   // }
+
+  Future<void> callingSetState() {
+    return Future.delayed(Duration(seconds: 1)).whenComplete(
+      () {
+        BlocProvider.of<ChatUserBloc>(context)
+            .add(GetChatUserEvent(currentUser.uid));
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +100,12 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24))),
                     ),
+                    SizedBox(
+                      height: 100.h,
+                    ),
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
                   ],
                 ),
               ),
@@ -169,6 +185,56 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24))),
                     ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Expanded(
+                        child: RefreshIndicator(
+                      onRefresh: () {
+                        return callingSetState();
+                      },
+                      child: ListView(
+                        padding: EdgeInsets.zero,
+                        children: state.recentChatList.map((e) {
+                          // Map messageMap = e.latestMessage[0].data() as Map;
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => IndividualChatScreen(
+                                          receivingUser: e.userEntity,
+                                          senderUser: currentUser,
+                                          currentUserLastName:
+                                              state.currentUserData.lastName,
+                                          currentUserFirstName: state
+                                              .currentUserData.firstName)));
+                            },
+                            child: StreamBuilder(
+                                stream: e.latestMessage,
+                                builder: (context,
+                                    AsyncSnapshot<
+                                            QuerySnapshot<Map<String, dynamic>>>
+                                        snapshot) {
+                                  if (snapshot.hasData) {
+                                    var querySnapshot = snapshot.data;
+                                    return ListTile(
+                                      subtitle: Text(
+                                          snapshot.data!.docs[0]['message']),
+                                      title: Text(
+                                        "${e.userEntity.firstName} ${e.userEntity.lastName}",
+                                        style: kChatsTitleTextStyle.copyWith(
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    );
+                                  } else {
+                                    return const CircularProgressIndicator();
+                                  }
+                                }),
+                          );
+                        }).toList(),
+                      ),
+                    ))
                   ],
                 ),
               ),

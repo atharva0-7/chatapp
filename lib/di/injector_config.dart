@@ -1,19 +1,23 @@
 import 'package:chat_app_flutter/features/chat/data/datasource/local_datasource/get_recent_user_impl.dart';
 import 'package:chat_app_flutter/features/chat/data/datasource/remote_datasource/get_current_user_data.dart';
 import 'package:chat_app_flutter/features/chat/data/datasource/remote_datasource/get_messages.dart';
+import 'package:chat_app_flutter/features/chat/data/datasource/remote_datasource/recent_chats.dart';
 import 'package:chat_app_flutter/features/chat/data/datasource/remote_datasource/send_message.dart';
 import 'package:chat_app_flutter/features/chat/data/repositories/get_current_user_data_repositoryimpl.dart';
 import 'package:chat_app_flutter/features/chat/data/repositories/get_message_repository_impl.dart';
 import 'package:chat_app_flutter/features/chat/data/repositories/get_recent_users_list_repository_impl.dart';
 import 'package:chat_app_flutter/features/chat/data/repositories/get_user_repository_impl.dart';
+import 'package:chat_app_flutter/features/chat/data/repositories/recent_chat_list_repository_impl.dart';
 import 'package:chat_app_flutter/features/chat/data/repositories/send_message_repositoryImpl.dart';
 import 'package:chat_app_flutter/features/chat/domain/repository/get_current_user_data_repository.dart';
 import 'package:chat_app_flutter/features/chat/domain/repository/get_messages_repository.dart';
 import 'package:chat_app_flutter/features/chat/domain/repository/get_recent_searched_users_list_repository.dart';
 import 'package:chat_app_flutter/features/chat/domain/repository/get_user_repository.dart';
+import 'package:chat_app_flutter/features/chat/domain/repository/recent_chat_list_repository.dart';
 import 'package:chat_app_flutter/features/chat/domain/repository/send_message_repository.dart';
 import 'package:chat_app_flutter/features/chat/domain/usecase/get_current_user_data_usecase.dart';
 import 'package:chat_app_flutter/features/chat/domain/usecase/get_recent_searched_users_list_usecase.dart';
+import 'package:chat_app_flutter/features/chat/domain/usecase/recent_chat_list_usecase.dart';
 import 'package:chat_app_flutter/features/chat/domain/usecase/send_message_usecase.dart';
 
 import 'package:chat_app_flutter/features/chat/presentation/bloc/send_message_bloc/send_message_bloc.dart';
@@ -65,5 +69,12 @@ abstract class InjectorConfig {
       from: GetRecentSearchedUsersRepositoryImpl)
   @Register.factory(GetRecentSearchedUsersSource,
       from: GetRecentSearchedUsersImpl)
+
+
+  //RecentChatList
+  @Register.factory(RecentChatListUseCase)
+  @Register.factory(RecentChatListRepository,from: RecentChatListRepositoryImpl)
+  @Register.factory(RecentChatSource,from: RecentChatSourceImpl
+  )    
   void _configure();
 }

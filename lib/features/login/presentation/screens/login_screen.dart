@@ -57,7 +57,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (value!.length < 10 || value.length > 10) {
                           return "Enter 10 digit mobile number";
                         }
-                        return "";
                       },
                       onChanged: (value) {
                         phoneTextController.text = value;

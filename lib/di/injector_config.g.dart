@@ -17,6 +17,7 @@ class _$InjectorConfig extends InjectorConfig {
           (c) => GetChatUsersRepositoryImpl(getChatUsers: c<GetChatUsers>()))
       ..registerFactory<GetChatUsers>((c) => GetChatUsersImpl())
       ..registerFactory((c) => ChatUserBloc(
+          recentChatListUseCase: c<RecentChatListUseCase>(),
           getRecentSearchedUsersUseCase: c<GetRecentSearchedUsersUseCase>(),
           getChatUsersUseCase: c<GetChatUsersUseCase>(),
           getCurrentUserDataUseCase: c<GetCurrentUserDataUseCase>()))
@@ -47,6 +48,11 @@ class _$InjectorConfig extends InjectorConfig {
           GetRecentSearchedUsersRepositoryImpl(
               getRecentSearchedUsersSource: c<GetRecentSearchedUsersSource>()))
       ..registerFactory<GetRecentSearchedUsersSource>(
-          (c) => GetRecentSearchedUsersImpl());
+          (c) => GetRecentSearchedUsersImpl())
+      ..registerFactory((c) => RecentChatListUseCase(
+          recentChatListRepository: c<RecentChatListRepository>()))
+      ..registerFactory<RecentChatListRepository>((c) =>
+          RecentChatListRepositoryImpl(recentChatSource: c<RecentChatSource>()))
+      ..registerFactory<RecentChatSource>((c) => RecentChatSourceImpl());
   }
 }
